@@ -1,8 +1,22 @@
 import React from "react";
 
-function Black_Full_Screen({ children }: { children: React.ReactNode }) {
+interface Black_Full_ScreenType {
+  children: React.ReactNode;
+  id?: string;
+  className?: string;
+}
+
+function Black_Full_Screen({ children, id, className }: Black_Full_ScreenType) {
   return (
-    <div id="Black_Full_Screen" className="fixed top-0 left-0 min-w-full min-h-full bg-black opacity-80">{children}</div>
+    <div
+      id={id || ""}
+      className={`fixed top-0 left-0 w-screen h-screen bg-black opacity-80 z-50 ${className}`}
+      aria-hidden="true"
+    >
+      <div className="flex items-center justify-center min-h-screen">
+        {children}
+      </div>
+    </div>
   );
 }
 

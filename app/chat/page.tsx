@@ -1,9 +1,9 @@
-import React from 'react'
+"use client";
 
-function page() {
-  return (
-    <div>Chat</div>
-  )
+import React from "react";
+
+function Page() {
+  return <div>Chat</div>;
 }
 
-export default page
+export default Page;

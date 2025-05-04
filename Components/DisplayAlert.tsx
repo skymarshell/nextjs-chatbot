@@ -6,12 +6,17 @@ import Swal, { SweetAlertOptions } from "sweetalert2";
  * This utility function wraps `Swal.fire` and enforces some default behavior,
  * such as disabling outside clicks and the escape key to close the modal.
  *
- * @param {SweetAlertOptions} options - Configuration options for the SweetAlert modal.
- * These include properties like `title`, `text`, `icon`, `showConfirmButton`, `confirmButtonText`, etc.
- * All options are based on the SweetAlert2 API.
+ * @remarks
+ * The function applies the following defaults unless overridden:
+ * - `allowOutsideClick: false`
+ * - `allowEscapeKey: false`
  *
- * @returns {Promise<import("sweetalert2").SweetAlertResult<any>>} A promise that resolves with the result
- * of the modal (e.g., whether it was confirmed, dismissed, or input was entered).
+ * @param options - Configuration options for the SweetAlert modal.
+ * These include properties like `title`, `text`, `icon`, `showConfirmButton`, `confirmButtonText`, etc.
+ * All options conform to the {@link SweetAlertOptions} interface from SweetAlert2.
+ *
+ * @returns A promise that resolves with the result of the modal interaction.
+ * The result includes properties like `isConfirmed`, `isDismissed`, and `value`, as defined in {@link SweetAlertResult}.
  *
  * @example
  * ```ts
@@ -22,7 +27,7 @@ import Swal, { SweetAlertOptions } from "sweetalert2";
  * });
  * ```
  *
- * @see https://sweetalert2.github.io/ for full documentation on available options.
+ * @see {@link https://sweetalert2.github.io/} for full documentation on available options.
  */
 export default function DisplayAlert(options: SweetAlertOptions) {
   return Swal.fire({

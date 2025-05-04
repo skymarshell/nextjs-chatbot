@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header_Nav from "@/Components/header_nav";
 import Loading from "@/Components/Loading";
+import Loading_Redirect from "@/Components/Loading_Redirect";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,12 +30,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
+        {/* Header */}
         <Header_Nav />
-
+        {/* Content */}
         <main className="container mx-auto">{children}</main>
-        <section>
-          <Loading />
-        </section>
+        {/* custom */}
+
+        <Loading />
+        <Loading_Redirect />
       </body>
     </html>
   );

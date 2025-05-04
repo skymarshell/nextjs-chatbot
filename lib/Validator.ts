@@ -1,4 +1,5 @@
 import DisplayAlert from "@/Components/DisplayAlert";
+import Cookie from "./Cookie";
 
 /**
  * A utility object containing validation functions.
@@ -36,10 +37,26 @@ const Validator = {
         return false;
       }
 
-      // TODO: Create cookie or handle login logic here
       return true;
-    } catch (ex) {
-      console.log("Error Validator function Login_Input =>", ex);
+    } catch (error) {
+      console.log("Error Validator Login_Input : " + error);
+      return false;
+    }
+  },
+
+
+
+/**
+ * Checks whether the user is logged in based on the presence of a username in the cookie.
+ * 
+ * @returns {Promise<boolean>} true if logged in, false otherwise
+ */
+  IsLoggedIn: async (): Promise<boolean> => {
+    try {
+      const response = await Cookie.getUserCookie();
+      return !!response?.username;
+    } catch (error) {
+      console.log("Error Validator IsLoggedIn : " + error);
       return false;
     }
   },

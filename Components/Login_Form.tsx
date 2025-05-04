@@ -3,8 +3,12 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import Validator from "@/lib/Validator";
 import { setLoading } from "./Loading";
+import { useRouter } from "next/navigation";
+import Cookie from "@/lib/Cookie";
+import { setUsername } from "./Profile";
 
 function Login_Form() {
+  const router = useRouter();
   const username_ref = useRef<HTMLInputElement>(null);
   const password_ref = useRef<HTMLInputElement>(null);
 
@@ -13,7 +17,21 @@ function Login_Form() {
     const username = username_ref.current?.value ?? "";
     const password = password_ref.current?.value ?? "";
 
-    Validator.Login_Input(username, password);
+    setLoading(true);
+    const result = Validator.Login_Input(username, password);
+
+    if (result) {
+      const response = await Cookie.createUserCookie(username);
+
+      if (response?.data.success) {
+        const user_info = await Cookie.getUserCookie();
+
+        setUsername(user_info?.username ?? null);
+
+        router.push("/chat");
+      }
+    }
+    setLoading(false);
   }
 
   return (
@@ -102,7 +120,7 @@ function Login_Form() {
             </div> */}
             <button
               type="submit"
-              className="w-full text-white btn btn-primary"
+              className="w-full text-white btn btn-primary "
             >
               Log in
             </button>

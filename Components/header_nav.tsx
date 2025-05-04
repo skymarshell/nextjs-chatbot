@@ -1,6 +1,7 @@
 import React from "react";
 import Profile from "./Profile";
 
+
 function Header_Nav() {
   return (
     <header className="bg-white shadow">
