@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const completion = await openai.chat.completions.create({
-      model: process.env.MODEL2 as string,
+      model: process.env.MODEL as string,
       messages: [
         {
           role: "system",
