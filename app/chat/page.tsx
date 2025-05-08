@@ -134,12 +134,24 @@ function Chat_Search({ className }: Chat_SearchProps) {
       </div>
       <div className="h-[20%] w-full p-3 flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <CirclePlus size="30" />
-          <CircleWorld size="30" />
-          <CirclePlus size="30" />
-          <LightBulb size="30" />
-          <ImageIcon size="30" />
-          <CircleDots size="30" />
+          <div className="flex justify-center items-center space-x-2">
+            <CirclePlus size="40" />
+          </div>
+          <div className="flex justify-center items-center space-x-2 border border-white rounded-4xl py-1 px-2">
+            <CircleWorld size="30" />
+            <p className="mt-1">ค้นหา</p>
+          </div>
+          <div className="flex justify-center items-center space-x-2 border border-white rounded-4xl py-1 px-2">
+            <LightBulb size="30" />
+            <p className="mt-1">คิดเหตุผล</p>
+          </div>
+          <div className="flex justify-center items-center space-x-2 border border-white rounded-4xl py-1 px-2">
+            <ImageIcon size="30" />
+            <p className="mt-1">สร้างภาพ</p>
+          </div>
+          <div className="flex justify-center items-center space-x-2">
+            <CircleDots size="40" />
+          </div>
         </div>
         <div className="flex items-center space-x-3">
           <button
