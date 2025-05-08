@@ -1,8 +1,11 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @plugin "daisyui" {
-  themes: black --default;
+  themes: dark --default;
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* function .map in javascript */

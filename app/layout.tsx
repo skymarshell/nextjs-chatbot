@@ -4,6 +4,7 @@ import "./globals.css";
 import Header_Nav from "@/Components/header_nav";
 import Loading from "@/Components/Loading";
 import Loading_Redirect from "@/Components/Loading_Redirect";
+import Footer from "./../Components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,14 +29,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen  antialiased flex flex-col `}
       >
         {/* Header */}
         <Header_Nav />
         {/* Content */}
-        <main className="container mx-auto">{children}</main>
+        <main className="container mx-auto grow-1">{children}</main>
+        {/* Footer */}
+        <Footer />
         {/* custom */}
-
         <Loading />
         <Loading_Redirect />
       </body>

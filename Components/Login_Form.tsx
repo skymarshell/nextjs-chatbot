@@ -24,9 +24,7 @@ function Login_Form() {
       const response = await Cookie.createUserCookie(username);
 
       if (response?.data.success) {
-        const user_info = await Cookie.getUserCookie();
-
-        setUsername(user_info?.username ?? null);
+        setUsername(username ?? null);
 
         router.push("/chat");
       }

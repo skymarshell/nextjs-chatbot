@@ -1,0 +1,11 @@
+._chat_answer pre {
+  background-color: transparent !important; /* override Tailwind prose default */
+  border: none !important; /* remove border */
+  box-shadow: none !important; /* remove shadow if any */
+  padding: 0 !important; /* optional: tighten padding */
+}
+
+._chat_answer code {
+  border: none !important;
+  color: inherit !important;
+}
