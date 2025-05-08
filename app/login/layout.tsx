@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Validator from "@/lib/Validator";
 import { useRouter } from "next/navigation";
 import { setLoading } from "@/Components/Loading";
