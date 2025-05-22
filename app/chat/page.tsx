@@ -8,6 +8,7 @@ import Markdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import style from "@/public/styles/chat_ai.module.css";
+import remarkGfm from "remark-gfm";
 import {
   CirclePlus,
   CircleWorld,
@@ -56,6 +57,7 @@ function Chat_History({ className }: Chat_HistoryProps) {
     return (
       <div className={`${style._chat_answer} prose prose-xl max-w-full`}>
         <Markdown
+          remarkPlugins={[remarkGfm]}
           components={{
             code({ children, className, ...rest }) {
               const match = /language-(\w+)/.exec(className || "");

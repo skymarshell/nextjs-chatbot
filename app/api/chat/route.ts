@@ -8,6 +8,9 @@ export async function POST(req: NextRequest) {
   try {
     const completion = await openai.chat.completions.create({
       model: process.env.MODEL as string,
+      web_search_options: {
+        search_context_size: "medium",
+      },
       messages: [
         {
           role: "system",
