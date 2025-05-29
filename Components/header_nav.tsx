@@ -1,8 +1,8 @@
 import React from "react";
 import Profile from "./Profile";
+import Link from "next/link";
 
-
-function Header_Nav() {
+export default function Header_Nav() {
   return (
     <header className="bg-white shadow">
       <div className="container mx-auto flex items-center justify-between py-4 text-black">
@@ -20,9 +20,9 @@ function Header_Nav() {
 function Left_Nav() {
   return (
     <ul className="flex space-x-4">
-      <li className="bg-black px-5 py-3 rounded-2xl">
-        <p className="text-white text-2xl">Chat AI</p>
-      </li>
+      <Link href="/" className="text-white text-2xl">
+        <li className="bg-black px-5 py-3 rounded-2xl">Chat AI</li>
+      </Link>
     </ul>
   );
 }
@@ -38,5 +38,3 @@ function Right_Nav() {
     </>
   );
 }
-
-export default Header_Nav;
