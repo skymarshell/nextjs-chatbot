@@ -3,7 +3,7 @@ import Cookie from "@/lib/Cookie";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { CgProfile } from "react-icons/cg";
-import { setLoading } from "./Loading";
+//import { setLoading } from "./Loading";
 import { useRouter } from "next/navigation";
 
 let setUsernameFn: (username: string | null) => void = () => {};
@@ -19,10 +19,10 @@ function Profile() {
 
   useEffect(() => {
     async function initPage() {
-      setLoading(true);
+      //setLoading(true);
       const user_info = await Cookie.getUserCookie();
       setUsername(user_info?.username ?? null);
-      setLoading(false);
+      //setLoading(false);
     }
     initPage();
   }, []);

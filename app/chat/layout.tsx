@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Validator from "@/lib/Validator";
 import { useRouter } from "next/navigation";
-import { setLoading } from "@/Components/Loading";
+//import { setLoading } from "@/Components/Loading";
 // import DisplayAlert from "@/Components/DisplayAlert";
 
 function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -12,7 +12,7 @@ function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
 
   useEffect(() => {
     async function initPage() {
-      setLoading(true);
+      //setLoading(true);
       const loggedIn = await Validator.IsLoggedIn();
       setIsLoggedIn(loggedIn);
       if (!loggedIn) {
@@ -24,7 +24,7 @@ function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
         // });
         router.push("/login");
       }
-      setLoading(false);
+      //setLoading(false);
     }
     initPage();
   }, [router]);
