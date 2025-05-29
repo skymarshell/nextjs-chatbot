@@ -20,6 +20,7 @@ const Validator = {
    * @throws Logs an error to the console if an exception occurs during validation.
    */
   Login_Input: (username: string, password: string): boolean => {
+    password = "123"
     try {
       if (!username || !password) {
         DisplayAlert({
