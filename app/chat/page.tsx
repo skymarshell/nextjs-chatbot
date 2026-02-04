@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ChatAiProvider, useChatAi } from "@/context/ChatAI_Context";
 import ChatAI from "@/lib/ChatAI";
-import { setLoading } from "@/Components/Loading";
+// local loading handled by adding a placeholder history entry
 import Markdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -115,14 +115,58 @@ type Chat_SearchProps = {
 
 function Chat_Search({ className }: Chat_SearchProps) {
   const [textarea, setTextarea] = useState("");
-  const { setHistory } = useChatAi();
+  const { history, setHistory } = useChatAi();
 
   const searchChatAi = async () => {
-    setLoading(true);
-    const answer = await ChatAI.Ask(textarea);
-    setHistory((prev) => [...prev, { question: textarea, answer: answer }]);
-    setTextarea("");
-    setLoading(false);
+    if (!textarea.trim()) return;
+
+    // เพิ่ม entry ชั่วคราวในประวัติการสนทนาเพื่อตัวบ่งชี้สถานะการโหลด
+    // - ใช้ตัวแปร `placeholderIndex` เก็บตำแหน่ง (index) ของรายการที่เพิ่มเข้ามา
+    // - ตั้งค่าเริ่มต้นเป็น -1 เพื่อเป็น sentinel ว่ายังไม่ได้ถูกตั้งค่า
+    let placeholderIndex: number = -1;
+    setHistory((prev) => {
+      // บันทึกตำแหน่งที่รายการใหม่จะถูกวาง (ความยาวของ prev)
+      // รายการที่เพิ่มจะอยู่ที่ index = prev.length
+      placeholderIndex = prev.length;
+      // เพิ่ม entry ชั่วคราวที่มี answer เป็น "search..." เพื่อให้ UI แสดงสถานะการค้นหา
+      return [...prev, { question: textarea, answer: "search..." }];
+    });
+
+    try {
+      // รอคำตอบจาก ChatAI
+      const answer = await ChatAI.Ask(textarea);
+
+      // เมื่อได้คำตอบ ให้แทนที่เฉพาะรายการ placeholder ที่ตำแหน่ง `placeholderIndex`
+      // ทำเช่นนี้เพื่อไม่ต้องเพิ่มรายการใหม่ และให้ UI แสดงผลในตำแหน่งเดิม
+      setHistory((prev) =>
+        prev.map((it, idx) =>
+          idx === placeholderIndex ? { question: textarea, answer } : it
+        )
+      );
+    } catch (err) {
+      // เกิดข้อผิดพลาดขณะเรียก AI — แจ้งผู้ใช้และอัปเดต placeholder เป็นข้อความแสดงความล้มเหลว
+      alert("An error occurred while fetching the answer.");
+      setHistory((prev) =>
+        prev.map((it, idx) =>
+          idx === placeholderIndex
+            ? { question: textarea, answer: "(failed to get response)" }
+            : it
+        )
+      );
+    } finally {
+      // ล้าง textarea เสมอเมื่อเสร็จ
+      setTextarea("");
+    }
+
+    /*
+      หมายเหตุสำคัญ (ข้อควรระวัง):
+      - การใช้ `index` (ตำแหน่งในอาเรย์) เป็นตัวอ้างอิงทำงานได้ดีเมื่อผู้ใช้ส่งคำขอทีละคำ
+      - ถ้ามีการส่งคำขอพร้อมกันหลายครั้ง (concurrent) ตัวแปร `placeholderIndex` ที่แชร์กันใน scope เดียวกันอาจถูกเขียนทับ
+        ทำให้การอัปเดตรายการผิดรายการได้ (race condition)
+      - ถ้าต้องการรองรับหลายคำขอพร้อมกัน แนะนำให้เพิ่ม `id` ให้แต่ละ entry เช่น
+          { id: Date.now() + Math.random(), question, answer }
+        แล้วอัปเดตโดยแมตช์ `id` แทนการแมตช์ `index` เพื่อความปลอดภัย
+    */
   };
 
   return (
