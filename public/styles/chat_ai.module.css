@@ -9,3 +9,27 @@
   border: none !important;
   color: inherit !important;
 }
+
+/* animated dots for placeholder 'search...' */
+.animatedDots {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.animatedDot {
+  width: 8px;
+  height: 8px;
+  background-color: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  opacity: 0.2;
+  transform: translateY(0);
+  animation: dotPulse 1s infinite linear;
+}
+.animatedDot:nth-child(2) { animation-delay: 0.15s; }
+.animatedDot:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes dotPulse {
+  0% { opacity: 0.2; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-6px); }
+  100% { opacity: 0.2; transform: translateY(0); }
+}

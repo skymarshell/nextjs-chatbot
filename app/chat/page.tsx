@@ -56,29 +56,38 @@ function Chat_History({ className }: Chat_HistoryProps) {
   function ChatAnswer({ chat_answer }: { chat_answer: string }) {
     return (
       <div className={`${style._chat_answer} prose prose-xl max-w-full`}>
-        <Markdown
-          remarkPlugins={[remarkGfm]}
-          components={{
-            code({ children, className, ...rest }) {
-              const match = /language-(\w+)/.exec(className || "");
-              return match ? (
-                <SyntaxHighlighter
-                  PreTag="div"
-                  // eslint-disable-next-line react/no-children-prop
-                  children={String(children).replace(/\n$/, "")}
-                  language={match[1]}
-                  style={dark}
-                />
-              ) : (
-                <code {...rest} className={className}>
-                  {children}
-                </code>
-              );
-            },
-          }}
-        >
-          {chat_answer}
-        </Markdown>
+        {/* If the answer is the placeholder text 'search...', render animated dots */}
+        {chat_answer === "search..." ? (
+          <div className={style.animatedDots} aria-live="polite">
+            <div className={style.animatedDot} />
+            <div className={style.animatedDot} />
+            <div className={style.animatedDot} />
+          </div>
+        ) : (
+          <Markdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              code({ children, className, ...rest }) {
+                const match = /language-(\w+)/.exec(className || "");
+                return match ? (
+                  <SyntaxHighlighter
+                    PreTag="div"
+                    // eslint-disable-next-line react/no-children-prop
+                    children={String(children).replace(/\n$/, "")}
+                    language={match[1]}
+                    style={dark}
+                  />
+                ) : (
+                  <code {...rest} className={className}>
+                    {children}
+                  </code>
+                );
+              },
+            }}
+          >
+            {chat_answer}
+          </Markdown>
+        )}
       </div>
     );
   }
